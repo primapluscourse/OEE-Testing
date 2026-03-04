@@ -2010,7 +2010,7 @@
                                         ${allMachines.map(m => `
                                             <tr>
                                                 <td class="wrap-text"><strong>${m.machine_name}</strong></td>
-                                                <td class="wrap-text"><span class="badge ${m.area === 'Injeksi' ? 'badge-success' : 'badge-danger'}">${m.area}</span></td>
+                                                <td class="wrap-text">${m.area || '-'}</td>
                                                 <td class="wrap-text">${m.target_per_minute || 0}/min</td>
                                                 <td class="wrap-text">${m.pic || '-'}</td>
                                                 <td class="wrap-text">
@@ -3922,19 +3922,14 @@
                     <input type="text" id="modal-machine-name" class="input-field" style="text-transform: uppercase;">
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
-                    <div>
-                        <label class="label">Area *</label>
-                        <select id="modal-machine-area" class="input-field">
-                            <option value="">Select Area</option>
-                            <option value="Injeksi">Injeksi</option>
-                            <option value="Non Injeksi">Non Injeksi</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="label">Target per Minute</label>
-                        <input type="number" id="modal-machine-target" min="0" step="0.01" class="input-field" value="0">
-                    </div>
+                <div style="margin-bottom: 20px;">
+                    <label class="label">Area *</label>
+                    <input type="text" id="modal-machine-area" class="input-field" placeholder="Contoh: Injeksi, Non Injeksi, dll." style="text-transform: uppercase;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label class="label">Target per Minute</label>
+                    <input type="number" id="modal-machine-target" min="0" step="0.01" class="input-field" value="0">
                 </div>
                 
                 <div style="margin-bottom: 20px;">
@@ -3998,19 +3993,14 @@
                     <input type="text" id="modal-machine-name" value="${machine.machine_name}" class="input-field" style="text-transform: uppercase;">
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
-                    <div>
-                        <label class="label">Area *</label>
-                        <select id="modal-machine-area" class="input-field">
-                            <option value="">Select Area</option>
-                            <option value="Injeksi" ${machine.area === 'Injeksi' ? 'selected' : ''}>Injeksi</option>
-                            <option value="Non Injeksi" ${machine.area === 'Non Injeksi' ? 'selected' : ''}>Non Injeksi</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="label">Target per Minute</label>
-                        <input type="number" id="modal-machine-target" value="${machine.target_per_minute}" min="0" step="0.01" class="input-field">
-                    </div>
+                <div style="margin-bottom: 20px;">
+                    <label class="label">Area *</label>
+                    <input type="text" id="modal-machine-area" value="${machine.area || ''}" class="input-field" style="text-transform: uppercase;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label class="label">Target per Minute</label>
+                    <input type="number" id="modal-machine-target" value="${machine.target_per_minute}" min="0" step="0.01" class="input-field">
                 </div>
                 
                 <div style="margin-bottom: 20px;">
@@ -4136,7 +4126,7 @@
 
         async function saveMachineModal() {
             const machineName = document.getElementById('modal-machine-name')?.value.toUpperCase() || '';
-            const area = document.getElementById('modal-machine-area')?.value || '';
+            const area = document.getElementById('modal-machine-area')?.value.toUpperCase() || '';
             const target = parseFloat(document.getElementById('modal-machine-target')?.value) || 0;
             const pic = document.getElementById('modal-machine-pic')?.value.toUpperCase() || '';
             
